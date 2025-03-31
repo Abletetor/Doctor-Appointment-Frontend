@@ -23,7 +23,7 @@ const PaymentSuccess = () => {
          }
 
          try {
-            const { data } = await axios.post(`${backendUrl}/api/user/verify-stripe-payment`, { sessionId }, { headers: { token } });
+            const { data } = await axios.post(`${backendUrl}/api/user/verify-stripe-payment`, { sessionId }, { headers: { Authorization: `Bearer ${token}` } });
 
 
             if (data.success) {

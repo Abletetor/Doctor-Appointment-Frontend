@@ -7,9 +7,9 @@ const Banner = () => {
    const navigate = useNavigate();
    return (
       <motion.div
-         initial={ { opacity: 0, x: 200 } }
+         initial={ { opacity: 0, y: 200 } }
          transition={ { duration: 1 } }
-         whileInView={ { opacity: 1, x: 0 } }
+         whileInView={ { opacity: 1, y: 0 } }
          viewport={ { once: true } }
          className='flex bg-[#008080] rounded-lg px-6 sm:px-10 md:px-14 lg:12 my-20 md:mx-10'>
          {/* left side */ }

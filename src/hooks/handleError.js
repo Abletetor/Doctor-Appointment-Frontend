@@ -6,7 +6,9 @@ export const handleError = (error) => {
       toast.error(error.response.data.message || "Something went wrong!");
    } else if (error.request) {
       toast.error("No response from server. Please check your internet connection.");
+      console.error("Request Error:", error.request);
    } else {
       toast.error("An unexpected error occurred.");
+      console.error("Unexpected Error:", error.message);
    }
 };

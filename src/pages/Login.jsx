@@ -11,23 +11,31 @@ const Login = () => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [name, setName] = useState('');
-   const { token, setToken, backendUrl } = useContext(AppContext);
+   const { token, setToken, backendUrl, setUserData } = useContext(AppContext);
 
    // ** Handle form submission **
    const onSubmitHandler = async (e) => {
       e.preventDefault();
+
       try {
          if (state === "Sign Up") {
             const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
             if (data.success) {
                localStorage.setItem("token", data.token);
                setToken(data.token);
+               setUserData(data.userData);
+
             } else { toast.error(data.message); }
+
          } else {
+
             const { data } = await axios.post(`${backendUrl}/api/user/login`, { email, password });
+
             if (data.success) {
                localStorage.setItem("token", data.token);
                setToken(data.token);
+               setUserData(data.userData);
+
             } else { toast.error(data.message); }
          }
       } catch (error) {

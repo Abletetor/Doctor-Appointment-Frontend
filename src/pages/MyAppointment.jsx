@@ -16,7 +16,7 @@ const MyAppointment = () => {
    // **Get User Appointments**
    const getUserAppointments = async () => {
       try {
-         const { data } = await axios.get(`${backendUrl}/api/user/appointments`, { headers: { token } });
+         const { data } = await axios.get(`${backendUrl}/api/user/appointments`, { headers: { Authorization: `Bearer ${token}` } });
 
          if (data.success) {
             setAppointments(data.appointments.reverse());
@@ -33,7 +33,7 @@ const MyAppointment = () => {
       setLoading((prev) => ({ ...prev, [`cancel-${appointmentId}`]: true }));
 
       try {
-         const { data } = await axios.post(`${backendUrl}/api/user/cancel-appointment`, { appointmentId }, { headers: { token } });
+         const { data } = await axios.post(`${backendUrl}/api/user/cancel-appointment`, { appointmentId }, { headers: { Authorization: `Bearer ${token}` } });
 
          if (data.success) {
             toast.success(data.message);
@@ -53,7 +53,7 @@ const MyAppointment = () => {
       setLoading((prev) => ({ ...prev, [appointmentId]: true }));
 
       try {
-         const { data } = await axios.post(`${backendUrl}/api/user/payment-stripe`, { appointmentId }, { headers: { token } });
+         const { data } = await axios.post(`${backendUrl}/api/user/payment-stripe`, { appointmentId }, { headers: { Authorization: `Bearer ${token}` } });
 
          if (data.success) {
             const stripe = await stripePromise;
