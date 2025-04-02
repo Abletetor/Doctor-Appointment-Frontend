@@ -72,7 +72,7 @@ const MyProfile = () => {
    };
 
    return userData && (
-      <div className="max-w-lg mx-auto p-5 text-sm bg-white rounded-lg shadow-md border border-[#B2DFDB]">
+      <div className="max-w-lg mx-auto p-5 text-sm bg-white rounded-lg shadow-md border border-[#B2DFDB] mb-10">
          {/* Profile Image */ }
          <div className="flex flex-col items-center">
             <label htmlFor="image" className="relative cursor-pointer">
