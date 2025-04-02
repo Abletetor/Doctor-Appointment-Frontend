@@ -38,8 +38,8 @@ const Doctors = () => {
          whileInView={ { opacity: 1, y: 0 } }
          viewport={ { once: true } }>
          <p className="text-[#4A4A4A]">Browse through the doctors specialist.</p>
-         <div 
-         className="flex flex-col sm:flex-row items-start gap-5 mt-5">
+         <div
+            className="flex flex-col sm:flex-row items-start gap-5 mt-5">
             <button
                className={ `py-1 px-3 border border-[#B2DFDB] rounded cursor-pointer text-sm transition-all sm:hidden ${showFilter ? "bg-[#008080] text-white" : "text-[#4A4A4A]"} hover:bg-[#006666] hover:text-white` }
                onClick={ () => setShowFilter((prev) => !prev) }
@@ -66,7 +66,7 @@ const Doctors = () => {
             <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 pt-5 gap-y-6">
 
                { loading ? (
-                  <LottieLoader message="Fetching Doctors..." size="w-50 h-50" />
+                  <LottieLoader message="Fetching Doctors..." size="w-100 h-100" />
                ) : filterDoc.length > 0 ? (
                   filterDoc.map((item, index) => (
                      <div
