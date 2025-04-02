@@ -111,6 +111,7 @@ const Appointment = () => {
          if (data.success) {
             toast.success(data.message);
             getAllDoctors();
+            window.scrollTo(0, 0);
             navigate('/my-appointments');
          } else {
             toast.error(data.message);
