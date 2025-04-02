@@ -39,7 +39,7 @@ const Doctors = () => {
          viewport={ { once: true } }>
          <p className="text-[#4A4A4A]">Browse through the doctors specialist.</p>
          <div
-            className="flex flex-col sm:flex-row items-start gap-5 mt-5">
+            className="flex flex-col sm:flex-row items-start gap-5 mt-5 mb-6">
             <button
                className={ `py-1 px-3 border border-[#B2DFDB] rounded cursor-pointer text-sm transition-all sm:hidden ${showFilter ? "bg-[#008080] text-white" : "text-[#4A4A4A]"} hover:bg-[#006666] hover:text-white` }
                onClick={ () => setShowFilter((prev) => !prev) }
@@ -63,7 +63,7 @@ const Doctors = () => {
             </div>
 
             {/* Doctors List */ }
-            <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 pt-5 gap-y-6">
+            <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(215px,1fr))] gap-4 pt-5 gap-y-6">
 
                { loading ? (
                   <LottieLoader message="Fetching Doctors..." size="w-100 h-100" />
@@ -81,12 +81,21 @@ const Doctors = () => {
                               <p>{ item.available ? "Available" : "Not Available" }</p>
                            </div>
                            <p className="text-[#008080] text-lg font-medium">{ item.name }</p>
-                           <p className="text-[#4A4A4A] text-sm">{ item.speciality }</p>
+                           <div className='flex justify-between items-center mt-1'>
+                              <p className='text-[#4A4A4A] text-sm'>{ item.speciality }</p>
+                              <button
+                                 onClick={ () => { navigate(`/appointment/${item._id}`); scrollTo(0, 0); } }
+                                 className={ `px-3 py-1 text-white rounded-full text-xs transition-all duration-300 shadow-md ${item.available ? "bg-[#008080] hover:bg-[#006666] cursor-pointer" : "bg-[#B0BEC5] cursor-not-allowed"}` }
+                                 disabled={ !item.available }
+                              >
+                                 { item.available ? "Book now" : "Not Available" }
+                              </button>
+                           </div>
                         </div>
                      </div>
                   ))
                ) : (
-                  <p className="text-center text-[#4A4A4A]">No doctors available for this category.</p>
+                  <p className="text-center text-[#4A4A4A]">No Data Available at the Moment.</p>
                ) }
             </div>
          </div>

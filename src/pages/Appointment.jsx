@@ -87,6 +87,7 @@ const Appointment = () => {
    const bookAppointment = async () => {
       if (!token) {
          toast.warn("Login to book appointment");
+         window.scrollTo(0, 0);
          return navigate('/login');
       }
 
@@ -149,7 +150,7 @@ const Appointment = () => {
                <div className="flex items-center gap-2 text-sm mt-1 text-[#4A4A4A]">
                   <p>{ docInfo.degree } - { docInfo.speciality }</p>
                   <button className="py-1 px-3 border border-[#B2DFDB] text-xs rounded-full bg-white">
-                     { docInfo.experience } Years
+                     { docInfo.experience }
                   </button>
                </div>
 

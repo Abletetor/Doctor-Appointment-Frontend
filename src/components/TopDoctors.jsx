@@ -31,7 +31,16 @@ const TopDoctors = () => {
                         <p>{ item.available ? "Available" : "Not Available" }</p>
                      </div>
                      <p className='text-[#008080] text-lg font-medium'>{ item.name }</p>
-                     <p className='text-[#4A4A4A] text-sm'>{ item.speciality }</p>
+                     <div className='flex justify-between items-center mt-1'>
+                        <p className='text-[#4A4A4A] text-sm'>{ item.speciality }</p>
+                        <button
+                           onClick={ () => { navigate(`/appointment/${item._id}`); scrollTo(0, 0); } }
+                           className={ `px-3 py-1 text-white rounded-full text-xs transition-all duration-300 shadow-md ${item.available ? "bg-[#008080] hover:bg-[#006666] cursor-pointer" : "bg-[#B0BEC5] cursor-not-allowed"}` }
+                           disabled={ !item.available }
+                        >
+                           { item.available ? "Book now" : "Not Available" }
+                        </button>
+                     </div>
                   </div>
                </div>
             )) }

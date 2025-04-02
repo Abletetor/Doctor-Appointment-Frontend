@@ -15,25 +15,27 @@ import Services from './pages/Services';
 
 const App = () => {
    return (
-      <div className='mx-4 sm:mx-[10%]'>
-         <ToastContainer />
-         <Navbar />
-         <Routes>
-            <Route path='/' element={ <Home /> } />
-            <Route path='/doctors' element={ <Doctors /> } />
-            <Route path='/doctors/:speciality' element={ <Doctors /> } />
-            <Route path='/login' element={ <Login /> } />
-            <Route path='/about' element={ <About /> } />
-            <Route path='/contact' element={ <Contact /> } />
-            <Route path='/services' element={ <Services /> } />
-            <Route path='/my-profile' element={ <MyProfile /> } />
-            <Route path='/my-appointments' element={ <MyAppointment /> } />
-            <Route path='/appointment/:docId' element={ <Appointment /> } />
-            <Route path="/payment-success" element={ <PaymentSuccess /> } />
-            <Route path='/cancel' element={ <MyAppointment /> } />
-         </Routes>
+      <>
+         <div className='mx-4 sm:mx-[10%]'>
+            <ToastContainer />
+            <Navbar />
+            <Routes>
+               <Route path='/' element={ <Home /> } />
+               <Route path='/doctors' element={ <Doctors /> } />
+               <Route path='/doctors/:speciality' element={ <Doctors /> } />
+               <Route path='/login' element={ <Login /> } />
+               <Route path='/about' element={ <About /> } />
+               <Route path='/contact' element={ <Contact /> } />
+               <Route path='/services' element={ <Services /> } />
+               <Route path='/my-profile' element={ <MyProfile /> } />
+               <Route path='/my-appointments' element={ <MyAppointment /> } />
+               <Route path='/appointment/:docId' element={ <Appointment /> } />
+               <Route path="/payment-success" element={ <PaymentSuccess /> } />
+               <Route path='/cancel' element={ <MyAppointment /> } />
+            </Routes>
+         </div>
          <Footer />
-      </div>
+      </>
    );
 };
 
