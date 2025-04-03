@@ -46,7 +46,7 @@ const RelatedDoctors = ({ speciality, docId }) => {
                            className={ `px-3 py-1 text-white rounded-full text-xs transition-all duration-300 shadow-md ${item.available ? "bg-[#008080] hover:bg-[#006666] cursor-pointer" : "bg-[#B0BEC5] cursor-not-allowed"}` }
                            disabled={ !item.available }
                         >
-                           { item.available ? "Book now" : "Not Available" }
+                           Book now
                         </button>
                      </div>
                   </div>
