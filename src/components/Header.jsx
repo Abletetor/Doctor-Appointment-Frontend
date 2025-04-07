@@ -24,7 +24,7 @@ const Header = () => {
 
          {/* Right side  */ }
          <div className='md:w-1/2 relative'>
-            <img src={ assets.header_img } alt="Header-Image" className='w-full md:absolute bottom-0 h-auto rounded-lg' />
+            <img src={ assets.header } alt="Header-Image" className='w-full md:absolute bottom-0 h-auto rounded-lg' />
          </div>
 
       </motion.div>
