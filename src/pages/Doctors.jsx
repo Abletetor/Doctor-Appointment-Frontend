@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import LottieLoader from "../components/LottieLoader";
 import { motion } from "framer-motion";
+import StarRating from "../components/StarRating";
 
 const Doctors = () => {
    const { speciality } = useParams();
@@ -81,6 +82,8 @@ const Doctors = () => {
                               <p>{ item.available ? "Available" : "Not Available" }</p>
                            </div>
                            <p className="text-[#008080] text-lg font-medium">{ item.name }</p>
+                           <StarRating doctorId={ item._id } />
+
                            <div className='flex justify-between items-center mt-1'>
                               <p className='text-[#4A4A4A] text-sm'>{ item.speciality }</p>
                               <button

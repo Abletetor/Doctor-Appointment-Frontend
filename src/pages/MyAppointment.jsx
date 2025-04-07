@@ -6,12 +6,14 @@ import { loadStripe } from "@stripe/stripe-js";
 import { handleError } from '../hooks/handleError';
 import { slotDateFormat } from '../hooks/slotDateFormat';
 import LottieLoader from '../components/LottieLoader';
+import { useNavigate } from 'react-router-dom';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const MyAppointment = () => {
    const { backendUrl, token } = useContext(AppContext);
    const [appointments, setAppointments] = useState([]);
    const [loading, setLoading] = useState({});
+   const navigate = useNavigate();
 
    // **Get User Appointments**
    const getUserAppointments = async () => {
@@ -99,7 +101,7 @@ const MyAppointment = () => {
                   </div>
                   <div></div>
                   <div className="flex flex-col justify-end gap-2">
-                     { !item.cancelled && item.payment && !item.isCompleted && (
+                     { !item.cancelled && item.payment && item.isCompleted && (
                         <button className="sm:min-w-48 py-2 border border-[#B2DFDB] rounded text-[#008080] bg-[#E0F2F1]">Paid</button>
                      ) }
                      { !item.cancelled && !item.payment && !item.isCompleted && (
@@ -128,8 +130,19 @@ const MyAppointment = () => {
                         <button className="sm:min-w-48 border border-red-500 rounded text-red-500">Appointment Cancelled</button>
                      ) }
 
-                     { item.isCompleted && (
-                        <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">Completed</button>) }
+                     { item.isCompleted && !item.rated && (
+                        <button
+                           onClick={ () => navigate(`/rate/${item.docData._id}/${item._id}`) }
+                           className="sm:min-w-48 py-2 border border-[#B2DFDB] rounded text-[#008080] bg-[#E0F2F1] hover:bg-[#006666] hover:text-white hover:scale-105 transition-all duration-300"
+                        >
+                           Rate Now
+                        </button>
+                     ) }
+
+                     { item.isCompleted && item.rated && (
+                        <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">Rated</button>
+                     ) }
+
                   </div>
                </div>
             ))

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import StarRating from './StarRating';
 
 const RelatedDoctors = ({ speciality, docId }) => {
    const navigate = useNavigate();
@@ -27,7 +28,7 @@ const RelatedDoctors = ({ speciality, docId }) => {
                   onClick={ () => { navigate(`/appointment/${item._id}`); scrollTo(0, 0); } }
                   className="border border-[#B2DFDB] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 shadow-md"
                >
-                  <img src={ item.image } alt="Doctor" className="bg-[#E0F2F1] w-full h-44 object-cover" />
+                  <img src={ item.image } alt="Doctor" className="bg-[#E0F2F1] w-full h-44 object-contain" />
                   <div className="p-4">
                      {/* Availability Status */ }
                      <div className={ `flex items-center gap-2 text-sm ${item.available ? "text-green-600" : "text-[#B0BEC5]"}` }>
@@ -37,6 +38,7 @@ const RelatedDoctors = ({ speciality, docId }) => {
 
                      {/* Doctor Name */ }
                      <p className="text-[#008080] text-lg font-semibold">{ item.name }</p>
+                     <StarRating doctorId={ item._id } />
 
                      {/* Speciality */ }
                      <div className='flex justify-between items-center mt-1'>

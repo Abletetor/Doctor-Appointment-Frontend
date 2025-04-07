@@ -48,10 +48,6 @@ const AppContextProvider = (props) => {
       token ? loadUserDataProfile() : setUserData(false);
    }, [token]);
 
-   useEffect(() => {
-      console.log("User Data in Context:", userData);
-   }, [userData]);
-
 
    const value = {
       doctors, currencySymbol, backendUrl,

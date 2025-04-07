@@ -35,7 +35,7 @@ const StarRating = ({ rating }) => {
       <div className="flex">
          { [...Array(5)].map((_, index) => (
             index < rating ?
-               <FaStar key={ index } className="text-yellow-500" />
+               <FaStar key={ index } className="text-orange-500" />
                :
                <FaRegStar key={ index } className="text-gray-400" />
          )) }

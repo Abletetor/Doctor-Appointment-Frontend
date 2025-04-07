@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
    const navigate = useNavigate();
+   const dropdownRef = useRef();
    const [showMenu, setShowMenu] = useState(false);
    const [dropdownOpen, setDropdownOpen] = useState(false);
    const { token, setToken, userData } = useContext(AppContext);
@@ -14,6 +15,19 @@ const Navbar = () => {
       localStorage.removeItem("token");
       navigate("/");
    };
+
+   useEffect(() => {
+      function handleClickOutside (event) {
+         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setDropdownOpen(false);
+         }
+      }
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+         document.removeEventListener("mousedown", handleClickOutside);
+      };
+   }, []);
 
    return (
       <>
@@ -49,7 +63,7 @@ const Navbar = () => {
             {/* Profile & Mobile Menu */ }
             <div className="flex items-center gap-4">
                { token && userData ? (
-                  <div className="relative">
+                  <div className="relative" ref={ dropdownRef }>
                      <div
                         className="flex items-center gap-3 cursor-pointer"
                         onClick={ () => setDropdownOpen(!dropdownOpen) }
@@ -66,36 +80,35 @@ const Navbar = () => {
                         />
                      </div>
 
-                     {/* Dropdown Menu */ }
                      { dropdownOpen && (
                         <div className="absolute right-0 mt-3 bg-white border border-[#B2DFDB] rounded-md shadow-lg text-gray-700 w-48">
                            <div className="flex flex-col p-4 space-y-2">
                               <p
-                                 onClick={ () => navigate("/my-profile") }
+                                 onClick={ () => {
+                                    navigate("/my-profile");
+                                    setDropdownOpen(false);
+                                    scrollTo(0, 0);
+                                 } }
                                  className="cursor-pointer hover:text-[#008080]"
                               >
                                  My Profile
                               </p>
                               <p
-                                 onClick={ () => navigate("/my-appointments") }
+                                 onClick={ () => {
+                                    navigate("/my-appointments");
+                                    setDropdownOpen(false);
+                                    scrollTo(0, 0);
+                                 } }
                                  className="cursor-pointer hover:text-[#008080]"
                               >
                                  My Appointments
                               </p>
                               <p
-                                 onClick={ () => navigate("/rate") }
-                                 className="cursor-pointer hover:text-[#008080]"
-                              >
-                                 Rate A Doctor
-                              </p>
-                              <p
-                                 onClick={ () => navigate("/complain") }
-                                 className="cursor-pointer hover:text-[#008080]"
-                              >
-                                 Lodge Complaint
-                              </p>
-                              <p
-                                 onClick={ logout }
+                                 onClick={ () => {
+                                    logout();
+                                    setDropdownOpen(false);
+                                    scrollTo(0, 0);
+                                 } }
                                  className="cursor-pointer hover:text-red-500"
                               >
                                  Logout
@@ -104,6 +117,7 @@ const Navbar = () => {
                         </div>
                      ) }
                   </div>
+
                ) : (
                   <button
                      onClick={ () => navigate("/login") }

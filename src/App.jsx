@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import PaymentSuccess from './pages/PaymentSuccess';
 import Services from './pages/Services';
+import RateDoctor from './pages/RateDoctor';
 
 const App = () => {
    return (
@@ -32,6 +33,7 @@ const App = () => {
                <Route path='/appointment/:docId' element={ <Appointment /> } />
                <Route path="/payment-success" element={ <PaymentSuccess /> } />
                <Route path='/cancel' element={ <MyAppointment /> } />
+               <Route path="/rate/:doctorId/:appointmentId" element={ <RateDoctor /> } />
             </Routes>
          </div>
          <Footer />

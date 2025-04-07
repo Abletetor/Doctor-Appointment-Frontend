@@ -6,6 +6,7 @@ import RelatedDoctors from '../components/RelatedDoctors';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { handleError } from '../hooks/handleError';
+import StarRating from '../components/StarRating';
 
 const Appointment = () => {
    const { docId } = useParams();
@@ -123,6 +124,7 @@ const Appointment = () => {
 
    useEffect(() => {
       fetchDocInfo();
+      console.log("Doc Info:", docInfo);
    }, [doctors, docId]);
 
 
@@ -130,7 +132,6 @@ const Appointment = () => {
       <div>
          {/* Doctor Details */ }
          <div className="flex flex-col sm:flex-row gap-6">
-            {/* Doctor Image */ }
             <div>
                <img
                   src={ docInfo.image }
@@ -146,6 +147,7 @@ const Appointment = () => {
                   { docInfo.name }
                   <img src={ assets.verified_icon } alt="Verified" className="w-5" />
                </p>
+               <StarRating doctorId={ docInfo._id } />
 
                {/* Degree, Specialty & Experience */ }
                <div className="flex items-center gap-2 text-sm mt-1 text-[#4A4A4A]">
