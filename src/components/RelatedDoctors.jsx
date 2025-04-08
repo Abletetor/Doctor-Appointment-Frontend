@@ -38,7 +38,7 @@ const RelatedDoctors = ({ speciality, docId }) => {
 
                      {/* Doctor Name */ }
                      <p className="text-[#008080] text-lg font-semibold">{ item.name }</p>
-                     <StarRating doctorId={ item._id } />
+                     <StarRating rating={ item.averageRating } />
 
                      {/* Speciality */ }
                      <div className='flex justify-between items-center mt-1'>

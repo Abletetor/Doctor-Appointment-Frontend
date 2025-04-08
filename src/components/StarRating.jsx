@@ -1,41 +1,6 @@
 import { FaStar } from 'react-icons/fa';
-import { AppContext } from '../context/AppContext';
-import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import LottieLoader from './LottieLoader';
-import { handleError } from '../hooks/handleError';
-import { toast } from 'react-toastify';
 
-const StarRating = ({ doctorId }) => {
-   const { backendUrl } = useContext(AppContext);
-   const [rating, setRating] = useState(null);
-   const [loading, setLoading] = useState(true);
-
-   useEffect(() => {
-      const fetchRating = async () => {
-         try {
-            const { data } = await axios.get(`${backendUrl}/api/rating/doctor/${doctorId}/average`);
-
-            if (data.success) {
-               setRating(parseFloat(data.averageRating));
-            } else { toast.error(data.message); }
-         } catch (err) {
-            handleError(err);
-            console.error("Failed to fetch rating:", err);
-            setRating(0);
-         } finally {
-            setLoading(false);
-         }
-      };
-
-      fetchRating();
-   }, [doctorId]);
-
-   if (loading) {
-      return <LottieLoader message="Fetching ratings..." size="w-50 h-50" />;
-   }
-
-
+const StarRating = ({ rating }) => {
    const fullStars = Math.floor(rating);
    const hasHalfStar = rating - fullStars >= 0.5;
 
@@ -58,5 +23,6 @@ const StarRating = ({ doctorId }) => {
       </div>
    );
 };
+
 
 export default StarRating;

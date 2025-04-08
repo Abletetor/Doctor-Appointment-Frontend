@@ -10,7 +10,9 @@ import StarRating from '../components/StarRating';
 
 const Appointment = () => {
    const { docId } = useParams();
-   const { doctors, currencySymbol, backendUrl, getAllDoctors, token } = useContext(AppContext);
+   const { doctors, currencySymbol, backendUrl, getAllDoctors,
+      getUserAppointments, token } = useContext(AppContext);
+
    const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
 
    const [docInfo, setDocInfo] = useState(null);
@@ -19,7 +21,7 @@ const Appointment = () => {
    const [slotTime, setSlotTime] = useState("");
    const navigate = useNavigate();
 
-   //Fetch Doctor Informations
+   // Fetch Doctor Info
    const fetchDocInfo = async () => {
       try {
          const docInfo = await doctors.find(doc => doc._id === docId);
@@ -29,7 +31,7 @@ const Appointment = () => {
       }
    };
 
-   // Calculate Available Slot
+   // Calculate Available Slots
    const getAvailableSlot = async () => {
       if (!docInfo) return;
 
@@ -43,7 +45,7 @@ const Appointment = () => {
          let endTime = new Date(currentDate);
          endTime.setHours(21, 0, 0, 0);
 
-         if (i === 0) { // Adjust start time if it's today
+         if (i === 0) {
             currentDate.setHours(Math.max(currentDate.getHours() + 1, 10));
             currentDate.setMinutes(currentDate.getMinutes() >= 30 ? 30 : 0);
          } else {
@@ -81,10 +83,14 @@ const Appointment = () => {
    };
 
    useEffect(() => {
+      fetchDocInfo();
+   }, [doctors]);
+
+   useEffect(() => {
       getAvailableSlot();
    }, [docInfo]);
 
-   // **Book appointment **
+   // Book appointment
    const bookAppointment = async () => {
       if (!token) {
          toast.warn("Login to book appointment");
@@ -112,6 +118,7 @@ const Appointment = () => {
          if (data.success) {
             toast.success(data.message);
             getAllDoctors();
+            await getUserAppointments();
             window.scrollTo(0, 0);
             navigate('/my-appointments');
          } else {
@@ -124,7 +131,6 @@ const Appointment = () => {
 
    useEffect(() => {
       fetchDocInfo();
-      console.log("Doc Info:", docInfo);
    }, [doctors, docId]);
 
 
@@ -147,7 +153,7 @@ const Appointment = () => {
                   { docInfo.name }
                   <img src={ assets.verified_icon } alt="Verified" className="w-5" />
                </p>
-               <StarRating doctorId={ docInfo._id } />
+               <StarRating rating={ docInfo.averageRating } />
 
                {/* Degree, Specialty & Experience */ }
                <div className="flex items-center gap-2 text-sm mt-1 text-[#4A4A4A]">

@@ -82,7 +82,7 @@ const Doctors = () => {
                               <p>{ item.available ? "Available" : "Not Available" }</p>
                            </div>
                            <p className="text-[#008080] text-lg font-medium">{ item.name }</p>
-                           <StarRating doctorId={ item._id } />
+                           <StarRating rating={ item.averageRating } />
 
                            <div className='flex justify-between items-center mt-1'>
                               <p className='text-[#4A4A4A] text-sm'>{ item.speciality }</p>

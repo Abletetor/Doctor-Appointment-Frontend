@@ -10,36 +10,30 @@ import { useNavigate } from 'react-router-dom';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const MyAppointment = () => {
-   const { backendUrl, token } = useContext(AppContext);
-   const [appointments, setAppointments] = useState([]);
+   const { backendUrl, token, getUserAppointments, appointments } = useContext(AppContext);
    const [loading, setLoading] = useState({});
    const navigate = useNavigate();
 
-   // **Get User Appointments**
-   const getUserAppointments = async () => {
-      try {
-         const { data } = await axios.get(`${backendUrl}/api/user/appointments`, { headers: { Authorization: `Bearer ${token}` } });
-
-         if (data.success) {
-            setAppointments(data.appointments.reverse());
-         } else {
-            toast.error(data.message);
-         }
-      } catch (error) {
-         handleError(error);
+   useEffect(() => {
+      if (token) {
+         getUserAppointments();
       }
-   };
+   }, [token]);
 
    // **Cancel Appointment**
    const cancelAppointment = async (appointmentId) => {
       setLoading((prev) => ({ ...prev, [`cancel-${appointmentId}`]: true }));
 
       try {
-         const { data } = await axios.post(`${backendUrl}/api/user/cancel-appointment`, { appointmentId }, { headers: { Authorization: `Bearer ${token}` } });
+         const { data } = await axios.post(
+            `${backendUrl}/api/user/cancel-appointment`,
+            { appointmentId },
+            { headers: { Authorization: `Bearer ${token}` } }
+         );
 
          if (data.success) {
             toast.success(data.message);
-            getUserAppointments();
+            getUserAppointments(); // ✅ refresh after cancel
          } else {
             toast.error(data.message);
          }
@@ -55,7 +49,11 @@ const MyAppointment = () => {
       setLoading((prev) => ({ ...prev, [appointmentId]: true }));
 
       try {
-         const { data } = await axios.post(`${backendUrl}/api/user/payment-stripe`, { appointmentId }, { headers: { Authorization: `Bearer ${token}` } });
+         const { data } = await axios.post(
+            `${backendUrl}/api/user/payment-stripe`,
+            { appointmentId },
+            { headers: { Authorization: `Bearer ${token}` } }
+         );
 
          if (data.success) {
             const stripe = await stripePromise;
@@ -75,11 +73,6 @@ const MyAppointment = () => {
       }
    };
 
-   useEffect(() => {
-      if (token) {
-         getUserAppointments();
-      }
-   }, [token]);
 
    return (
       <div className='mb-10'>

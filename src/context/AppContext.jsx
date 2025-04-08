@@ -13,10 +13,10 @@ const AppContextProvider = (props) => {
    const [doctors, setDoctors] = useState([]);
    const [token, setToken] = useState(localStorage.getItem('token') || null);
    const [userData, setUserData] = useState(false);
+   const [appointments, setAppointments] = useState([]);
 
    // **Get All Doctors**
    const getAllDoctors = async () => {
-
       try {
          const { data } = await axios.get(`${backendUrl}/api/doctor/list`);
          data.success ? setDoctors(data.doctors) : toast.error(data.message);
@@ -25,39 +25,69 @@ const AppContextProvider = (props) => {
       }
    };
 
-   // **On Load Get Doctors**
-   useEffect(() => {
-      getAllDoctors();
-   }, []);
-
-   // ** Get User Data Profile**
-   const loadUserDataProfile = async () => {
+   // **Get User Appointments**
+   const getUserAppointments = async () => {
       if (!token) return;
 
       try {
-         const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, { headers: { Authorization: `Bearer ${token}` } });
+         const { data } = await axios.get(`${backendUrl}/api/user/appointments`, {
+            headers: { Authorization: `Bearer ${token}` },
+         });
 
-         data.success ? setUserData(data.userData) : toast.error(data.message);
-
+         if (data.success) {
+            setAppointments(data.appointments.reverse());
+         } else {
+            toast.error(data.message);
+         }
       } catch (error) {
          handleError(error);
       }
    };
-   // *Load user profile*
+
+   // **Get User Profile**
+   const loadUserDataProfile = async () => {
+      if (!token) return;
+
+      try {
+         const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, {
+            headers: { Authorization: `Bearer ${token}` },
+         });
+
+         data.success ? setUserData(data.userData) : toast.error(data.message);
+      } catch (error) {
+         handleError(error);
+      }
+   };
+
+   // Load profile and appointments when token changes
    useEffect(() => {
-      token ? loadUserDataProfile() : setUserData(false);
+      if (token) {
+         loadUserDataProfile();
+         getUserAppointments();
+      } else {
+         setUserData(false);
+         setAppointments([]);
+      }
    }, [token]);
 
+   // On initial load, fetch doctors
+   useEffect(() => {
+      getAllDoctors();
+   }, []);
 
    const value = {
-      doctors, currencySymbol, backendUrl,
-      token, setToken, getAllDoctors,
-      userData, setUserData, loadUserDataProfile
+      doctors, currencySymbol,
+      backendUrl, token,
+      setToken, userData,
+      setUserData, loadUserDataProfile,
+      appointments, getUserAppointments, getAllDoctors
    };
+
    return (
       <AppContext.Provider value={ value }>
          { props.children }
       </AppContext.Provider>
    );
 };
+
 export default AppContextProvider;
