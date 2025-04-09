@@ -22,7 +22,7 @@ const AppContextProvider = (props) => {
       currentPage: 1,
       pageSize: 10
    });
-   
+
 
    // **Get All Doctors**
    const getAllDoctors = async (page = 1, limit = 10) => {
@@ -84,6 +84,10 @@ const AppContextProvider = (props) => {
          setAppointments([]);
       }
    }, [token]);
+
+   useEffect(() => {
+      getAllDoctors();
+   }, []);
 
 
    const value = {
