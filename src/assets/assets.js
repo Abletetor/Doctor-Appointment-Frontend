@@ -2,8 +2,8 @@ import banner_img from './banner.png';
 import header from './header1.png';
 import group_profiles from './group_profiles.png';
 import profile_pic from './profile_pic.png';
-import contact_image from './contact_image.png';
-import about_image from './about_image.png';
+import contact_img from './contact.jpg';
+import about_img from './hero.png';
 import logo from './logo.svg';
 import logo_1 from './logo-1.png';
 import dropdown_icon from './dropdown_icon.svg';
@@ -32,8 +32,8 @@ export const assets = {
    info_icon,
    profile_pic,
    arrow_icon,
-   contact_image,
-   about_image,
+   contact_img,
+   about_img,
    menu_icon,
    cross_icon,
    dropdown_icon,

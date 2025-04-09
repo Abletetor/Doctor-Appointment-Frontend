@@ -4,13 +4,16 @@ import { AppContext } from "../context/AppContext";
 import LottieLoader from "../components/LottieLoader";
 import { motion } from "framer-motion";
 import StarRating from "../components/StarRating";
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 const Doctors = () => {
    const { speciality } = useParams();
-   const { doctors } = useContext(AppContext);
+   const { doctors, getAllDoctors, pagination } = useContext(AppContext);
    const [filterDoc, setFilterDoc] = useState([]);
    const [showFilter, setShowFilter] = useState(false);
    const [loading, setLoading] = useState(true);
+   const [currentPage, setCurrentPage] = useState(1);
+   const limit = 9;
    const navigate = useNavigate();
 
    // Filter Doctors
@@ -28,9 +31,30 @@ const Doctors = () => {
       }, 500);
    }, [doctors, speciality]);
 
+   const handlePrev = () => {
+      if (currentPage > 1) {
+         setCurrentPage(prev => prev - 1);
+      }
+   };
+
+   const handleNext = () => {
+      if (currentPage < pagination?.totalPages) {
+         setCurrentPage(prev => prev + 1);
+      }
+   };
+
    useEffect(() => {
       applyFilter();
    }, [applyFilter]);
+
+   // On initial load, fetch doctors
+   useEffect(() => {
+      getAllDoctors(currentPage, limit).finally(() => setLoading(false));
+   }, [currentPage, limit]);
+
+   //Show pagination if filter is active
+   const isFilterActive = speciality !== undefined && speciality !== null;
+
 
    return (
       <motion.div
@@ -71,7 +95,11 @@ const Doctors = () => {
                ) : filterDoc.length > 0 ? (
                   filterDoc.map((item, index) => (
                      <div
-                        onClick={ () => navigate(`/appointment/${item._id}`) }
+                        onClick={
+                           () => {
+                              navigate(`/appointment/${item._id}`);
+                              scrollTo(0, 0);
+                           } }
                         key={ index }
                         className="border border-[#B2DFDB] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-5px] hover:shadow-lg transition-all duration-500"
                      >
@@ -101,7 +129,31 @@ const Doctors = () => {
                   <p className="text-center text-[#4A4A4A]">No Data Available at the Moment.</p>
                ) }
             </div>
+
          </div>
+         {/* Pagination Controls */ }
+         { !isFilterActive && (
+
+            <div className="mt-6 mb-10 flex justify-center items-center gap-4">
+               <button
+                  onClick={ handlePrev }
+                  disabled={ currentPage === 1 }
+                  className="text-[#008080] hover:bg-[#E0F2F1] px-3 py-1 rounded disabled:opacity-50 cursor-pointer"
+               >
+                  <MdChevronLeft size={ 18 } />
+               </button>
+               <span className="text-sm text-[#4A4A4A]">
+                  Page { currentPage } of { pagination?.totalPages }
+               </span>
+               <button
+                  onClick={ handleNext }
+                  disabled={ currentPage === pagination?.totalPages }
+                  className="text-[#008080] hover:bg-[#E0F2F1] px-3 py-1 rounded disabled:opacity-50 cursor-pointer"
+               >
+                  <MdChevronRight size={ 18 } />
+               </button>
+            </div>
+         ) }
       </motion.div>
    );
 

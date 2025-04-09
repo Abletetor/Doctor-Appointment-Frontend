@@ -58,7 +58,7 @@ const Contact = () => {
 
          {/* Contact Info Section */ }
          <div className="my-10 flex flex-col md:flex-row gap-10 items-center text-sm">
-            <img src={ assets.contact_image } alt="contact-image" className="w-full md:max-w-[360px] rounded-lg shadow-lg" />
+            <img src={ assets.contact_img } alt="contact-image" className="w-full md:max-w-[360px] rounded-lg shadow-lg" />
             <div className="flex flex-col justify-center gap-6 text-[#4A4A4A]">
                <div>
                   <p className="font-semibold text-lg text-[#008080]">OUR OFFICE</p>

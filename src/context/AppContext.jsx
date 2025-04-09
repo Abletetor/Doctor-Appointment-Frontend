@@ -15,11 +15,26 @@ const AppContextProvider = (props) => {
    const [userData, setUserData] = useState(false);
    const [appointments, setAppointments] = useState([]);
 
+   // pagination state
+   const [pagination, setPagination] = useState({
+      totalDocs: 0,
+      totalPages: 0,
+      currentPage: 1,
+      pageSize: 10
+   });
+   
+
    // **Get All Doctors**
-   const getAllDoctors = async () => {
+   const getAllDoctors = async (page = 1, limit = 10) => {
       try {
-         const { data } = await axios.get(`${backendUrl}/api/doctor/list`);
-         data.success ? setDoctors(data.doctors) : toast.error(data.message);
+         const { data } = await axios.get(`${backendUrl}/api/doctor/list?page=${page}&limit=${limit}`);
+
+         if (data.success) {
+            setDoctors(data.doctors);
+            setPagination(data.pagination);
+         } else {
+            toast.error(data.message);
+         }
       } catch (error) {
          handleError(error);
       }
@@ -70,17 +85,14 @@ const AppContextProvider = (props) => {
       }
    }, [token]);
 
-   // On initial load, fetch doctors
-   useEffect(() => {
-      getAllDoctors();
-   }, []);
 
    const value = {
       doctors, currencySymbol,
       backendUrl, token,
       setToken, userData,
       setUserData, loadUserDataProfile,
-      appointments, getUserAppointments, getAllDoctors
+      appointments, getUserAppointments, getAllDoctors,
+      pagination,
    };
 
    return (

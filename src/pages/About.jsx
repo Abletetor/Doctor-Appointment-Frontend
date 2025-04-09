@@ -1,6 +1,5 @@
 import React from 'react';
 import { assets } from '../assets/assets';
-import { partners } from '../assets/partners';
 import { motion } from "framer-motion";
 
 const About = () => {
@@ -19,18 +18,18 @@ const About = () => {
 
          {/* About Content */ }
          <div className="my-10 flex flex-col md:flex-row gap-12 items-center">
-            <img src={ assets.about_image } alt="About-Image" className="w-full md:max-w-[360px] rounded-lg shadow-lg" />
+            <img src={ assets.about_img } alt="About-Image" className="w-full md:max-w-[360px] rounded-lg shadow-lg" />
             <div className="flex flex-col justify-center gap-6 md:w-2/4 text-[16px] text-[#4A4A4A]">
                <p>
-               At <b>LOVEYOURWORLD</b>, we are dedicated to improving healthcare accessibility and promoting overall well-being in our communities. Our initiatives focus on raising awareness through health seminars, encouraging active lifestyles with health walks, and providing essential support through rehabilitation and psychological counseling. We believe that healthcare is a fundamental right, and we work tirelessly to ensure that those in need receive the necessary medical attention and guidance.
+                  At <b>LOVEYOURWORLD</b>, we are dedicated to improving healthcare accessibility and promoting overall well-being in our communities. Our initiatives focus on raising awareness through health seminars, encouraging active lifestyles with health walks, and providing essential support through rehabilitation and psychological counseling. We believe that healthcare is a fundamental right, and we work tirelessly to ensure that those in need receive the necessary medical attention and guidance.
                </p>
                <p>
-               Through our commitment to social impact, we also extend financial aid to individuals struggling to afford medical expenses. By bridging the gap between healthcare providers and underserved populations, we empower people to take control of their health. At <b>LOVEYOURWORLD</b>, we stand for a healthier, more compassionate world—one where everyone has the opportunity to lead a fulfilling life.
+                  Through our commitment to social impact, we also extend financial aid to individuals struggling to afford medical expenses. By bridging the gap between healthcare providers and underserved populations, we empower people to take control of their health. At <b>LOVEYOURWORLD</b>, we stand for a healthier, more compassionate world—one where everyone has the opportunity to lead a fulfilling life.
                </p>
 
                <b className="text-[#008080] text-lg">OUR VISION</b>
                <p>
-               At <b>LOVEYOURWORLD</b>, our mission is to make quality healthcare accessible to all by promoting awareness, providing support, and bridging the gap between medical care and those in need. Through education, advocacy, and direct assistance, we strive to create a world where no one is denied healthcare due to financial or social barriers.</p>
+                  At <b>LOVEYOURWORLD</b>, our mission is to make quality healthcare accessible to all by promoting awareness, providing support, and bridging the gap between medical care and those in need. Through education, advocacy, and direct assistance, we strive to create a world where no one is denied healthcare due to financial or social barriers.</p>
             </div>
          </div>
 
@@ -52,19 +51,6 @@ const About = () => {
                >
                   <b>{ item.title }</b>
                   <p>{ item.description }</p>
-               </div>
-            )) }
-         </div>
-
-         {/* Partners Section */ }
-         <div className="text-xl my-6 text-[#4A4A4A] text-center">
-            <p>OUR <span className="text-[#008080] font-semibold">PARTNERS</span></p>
-         </div>
-
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center mb-20">
-            { partners.map((partner, index) => (
-               <div key={ index } className="flex items-center justify-center border border-[#B2DFDB] p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-                  <img src={ partner.logo } alt={ partner.name } className="w-24 md:w-32 object-contain grayscale hover:grayscale-0 transition-all duration-300" />
                </div>
             )) }
          </div>
